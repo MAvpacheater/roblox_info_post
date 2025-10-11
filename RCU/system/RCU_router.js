@@ -20,7 +20,7 @@ class RCURouter {
         const { protocol, host, pathname } = window.location;
         
         if (host === 'mavpacheater.github.io') {
-            return `${protocol}//${host}/tester_site_Secret/RCU/`;
+            return `${protocol}//${host}/roblox_info_post/RCU/`;
         }
         
         if (host.includes('localhost') || host.includes('127.0.0.1')) {
