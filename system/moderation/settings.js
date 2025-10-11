@@ -8,7 +8,7 @@ function getSettingsBasePath() {
     const { protocol, host, pathname } = window.location;
     
     if (host === 'mavpacheater.github.io') {
-        return `${protocol}//${host}/tester_site_Secret/`;
+        return `${protocol}//${host}/roblox_info_post/`;
     }
     
     if (host.includes('localhost') || host.includes('127.0.0.1')) {
@@ -27,7 +27,7 @@ const SETTINGS_BASE_PATH = getSettingsBasePath();
 // ========== GITHUB CONFIG ==========
 const GITHUB_CONFIG = {
     user: 'MAvpacheater',
-    repo: 'tester_site_Secret',
+    repo: 'roblox_info_post',
     branch: 'main',
     imagePath: 'image/bg/'
 };
