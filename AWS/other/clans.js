@@ -12,7 +12,7 @@ function getClansBasePath() {
     
     // GitHub Pages
     if (host === 'mavpacheater.github.io') {
-        return `${protocol}//${host}/tester_site_Secret/AWS/`;
+        return `${protocol}//${host}/roblox_info_post/AWS/`;
     }
     
     // Localhost
