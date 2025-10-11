@@ -46,7 +46,7 @@ async function loadSystemScripts() {
         await createScript('AWS/system/aws_loader.js');
         console.log('✅ AWS system loaded');
         
-        // STEP 3: RCU system (NEW!)
+        // STEP 3: RCU system
         console.log('📦 Step 3: RCU system...');
         await createScript('RCU/system/RCU_loader.js');
         console.log('✅ RCU system loaded');
@@ -91,7 +91,7 @@ async function initializeSystems() {
         updateLoadingText('Initializing AWS router...');
         console.log('📦 AWS Router:', window.awsRouter ? '✅' : '⚠️ Not found');
         
-        // STEP 4: RCU Loader (NEW!)
+        // STEP 4: RCU Loader
         updateLoadingText('Initializing RCU loader...');
         console.log('🎮 RCU Loader:', window.rcuLoader ? '✅' : '⚠️ Not found');
         
@@ -106,7 +106,7 @@ async function initializeSystems() {
             console.log('✅ Critical AWS modules loaded');
         }
         
-        // STEP 7: RCU Modules (critical CSS only) (NEW!)
+        // STEP 7: RCU Modules (critical CSS only)
         updateLoadingText('Loading RCU modules...');
         if (typeof loadAllRCUModules === 'function') {
             await loadAllRCUModules();
@@ -125,7 +125,7 @@ async function initializeSystems() {
         if (typeof initGitHubAutoReload === 'function') {
             initGitHubAutoReload({
                 githubUser: 'MAvpacheater',
-                githubRepo: 'tester_site_Secret',
+                githubRepo: 'roblox_info_post',
                 branch: 'main',
                 checkInterval: 60000
             });
