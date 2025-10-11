@@ -14,7 +14,7 @@ class URLRouter {
         const { protocol, host } = window.location;
         
         if (host === 'mavpacheater.github.io') {
-            return `${protocol}//${host}/tester_site_Secret/`;
+            return `${protocol}//${host}/roblox_info_post/`;
         }
         return `${protocol}//${host}/`;
     }
@@ -60,17 +60,17 @@ class URLRouter {
             
             const pathVariants = [
                 full, `/${full}`, `${full}/`, `/${full}/`,
-                `/tester_site_Secret/${full}`, `/tester_site_Secret/${full}/`,
-                `tester_site_Secret/${full}`, `tester_site_Secret/${full}/`,
+                `/roblox_info_post/${full}`, `/roblox_info_post/${full}/`,
+                `roblox_info_post/${full}`, `roblox_info_post/${full}/`,
                 `${full}/menu`, `/${full}/menu`, `${full}/menu/`, `/${full}/menu/`,
-                `/tester_site_Secret/${full}/menu`, `/tester_site_Secret/${full}/menu/`,
-                `tester_site_Secret/${full}/menu`, `tester_site_Secret/${full}/menu/`,
+                `/roblox_info_post/${full}/menu`, `/roblox_info_post/${full}/menu/`,
+                `roblox_info_post/${full}/menu`, `roblox_info_post/${full}/menu/`,
                 path, `/${path}`, `${path}/`, `/${path}/`,
-                `/tester_site_Secret/${path}`, `/tester_site_Secret/${path}/`,
-                `tester_site_Secret/${path}`, `tester_site_Secret/${path}/`,
+                `/roblox_info_post/${path}`, `/roblox_info_post/${path}/`,
+                `roblox_info_post/${path}`, `roblox_info_post/${path}/`,
                 `${path}/menu`, `/${path}/menu`, `${path}/menu/`, `/${path}/menu/`,
-                `/tester_site_Secret/${path}/menu`, `/tester_site_Secret/${path}/menu/`,
-                `tester_site_Secret/${path}/menu`, `tester_site_Secret/${path}/menu/`
+                `/roblox_info_post/${path}/menu`, `/roblox_info_post/${path}/menu/`,
+                `roblox_info_post/${path}/menu`, `roblox_info_post/${path}/menu/`
             ];
             
             pathVariants.forEach(v => this.routes.set(v, page));
@@ -83,17 +83,17 @@ class URLRouter {
             
             const pathVariants = [
                 full, `/${full}`, `${full}/`, `/${full}/`,
-                `/tester_site_Secret/${full}`, `/tester_site_Secret/${full}/`,
-                `tester_site_Secret/${full}`, `tester_site_Secret/${full}/`,
+                `/roblox_info_post/${full}`, `/roblox_info_post/${full}/`,
+                `roblox_info_post/${full}`, `roblox_info_post/${full}/`,
                 `${full}/menu`, `/${full}/menu`, `${full}/menu/`, `/${full}/menu/`,
-                `/tester_site_Secret/${full}/menu`, `/tester_site_Secret/${full}/menu/`,
-                `tester_site_Secret/${full}/menu`, `tester_site_Secret/${full}/menu/`,
+                `/roblox_info_post/${full}/menu`, `/roblox_info_post/${full}/menu/`,
+                `roblox_info_post/${full}/menu`, `roblox_info_post/${full}/menu/`,
                 path, `/${path}`, `${path}/`, `/${path}/`,
-                `/tester_site_Secret/${path}`, `/tester_site_Secret/${path}/`,
-                `tester_site_Secret/${path}`, `tester_site_Secret/${path}/`,
+                `/roblox_info_post/${path}`, `/roblox_info_post/${path}/`,
+                `roblox_info_post/${path}`, `roblox_info_post/${path}/`,
                 `${path}/menu`, `/${path}/menu`, `${path}/menu/`, `/${path}/menu/`,
-                `/tester_site_Secret/${path}/menu`, `/tester_site_Secret/${path}/menu/`,
-                `tester_site_Secret/${path}/menu`, `tester_site_Secret/${path}/menu/`
+                `/roblox_info_post/${path}/menu`, `/roblox_info_post/${path}/menu/`,
+                `roblox_info_post/${path}/menu`, `roblox_info_post/${path}/menu/`
             ];
             
             pathVariants.forEach(v => this.routes.set(v, page));
@@ -105,12 +105,12 @@ class URLRouter {
             
             [
                 path, `/${path}`, `${path}/`, `/${path}/`,
-                `/tester_site_Secret/${path}`, `/tester_site_Secret/${path}/`,
-                `tester_site_Secret/${path}`, `tester_site_Secret/${path}/`
+                `/roblox_info_post/${path}`, `/roblox_info_post/${path}/`,
+                `roblox_info_post/${path}`, `roblox_info_post/${path}/`
             ].forEach(v => this.routes.set(v, page));
         });
 
-        ['/', '', '/tester_site_Secret/', '/tester_site_Secret'].forEach(v => this.routes.set(v, 'profile'));
+        ['/', '', '/roblox_info_post/', '/roblox_info_post'].forEach(v => this.routes.set(v, 'profile'));
         this.pageToPath.set('profile', 'profile');
     }
 
@@ -254,7 +254,7 @@ class URLRouter {
     }
 
     parsePathToPage(path) {
-        let clean = path.replace(/^\/|\/$/g, '').replace(/^tester_site_Secret\//, '');
+        let clean = path.replace(/^\/|\/$/g, '').replace(/^roblox_info_post\//, '');
         
         for (const test of [clean, `/${clean}`, `${clean}/`, `/${clean}/`]) {
             if (this.routes.has(test)) return this.routes.get(test);
@@ -268,8 +268,8 @@ class URLRouter {
         const direct = this.routes.get(pathname);
         if (direct) return direct;
 
-        let relative = pathname.includes('/tester_site_Secret/') 
-            ? pathname.split('/tester_site_Secret/')[1] || ''
+        let relative = pathname.includes('/roblox_info_post/') 
+            ? pathname.split('/roblox_info_post/')[1] || ''
             : pathname;
         
         relative = relative.replace(/^\/|\/$/g, '');
@@ -277,7 +277,7 @@ class URLRouter {
         const tests = [
             relative, `/${relative}`, `${relative}/`, `/${relative}/`,
             pathname, `${pathname}/`, pathname.replace(/\/$/, ''),
-            `/tester_site_Secret/${relative}`, `/tester_site_Secret/${relative}/`
+            `/roblox_info_post/${relative}`, `/roblox_info_post/${relative}/`
         ];
         
         const unique = [...new Set(tests)].filter(Boolean);
@@ -288,7 +288,7 @@ class URLRouter {
             }
         }
         
-        if (!relative || pathname === '/' || pathname === '/tester_site_Secret' || pathname === '/tester_site_Secret/') {
+        if (!relative || pathname === '/' || pathname === '/roblox_info_post' || pathname === '/roblox_info_post/') {
             return 'profile';
         }
         
@@ -433,10 +433,10 @@ class URLRouter {
         
         // Головна сторінка БЕЗ додаткових параметрів
         if (!normalized || 
-            normalized === 'tester_site_Secret' || 
+            normalized === 'roblox_info_post' || 
             pathname === '/' || 
-            pathname === '/tester_site_Secret' || 
-            pathname === '/tester_site_Secret/') {
+            pathname === '/roblox_info_post' || 
+            pathname === '/roblox_info_post/') {
             console.log('🏠 Root path detected (no direct link)');
             return false;
         }
