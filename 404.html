@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting... - Arm Helper</title>
+    <title>Redirecting... - Roblox Info</title>
     <style>
         body {
             margin: 0;
@@ -88,9 +88,9 @@
 <body>
     <div class="redirect-container">
         <div class="loading-icon">🚀</div>
-        <div class="redirect-title">Redirecting to <span id="pageName">Arm Helper</span></div>
+        <div class="redirect-title">Redirecting to <span id="pageName">Roblox Info</span></div>
         <div class="redirect-subtitle">
-            <!-- Removed tester_site_Secret path display -->
+            <!-- Removed roblox_info_post path display -->
         </div>
         <div class="progress-bar">
             <div class="progress-fill"></div>
@@ -132,19 +132,19 @@
         var search = window.location.search;
         var hash = window.location.hash;
         var pathParts = currentPath.split('/').filter(part => part);
-        var pageName = 'Arm Helper';
+        var pageName = 'Roblox Info';
         
         console.log('🔄 404 Redirect triggered for:', currentPath);
         console.log('🔍 Path parts:', pathParts);
         
         // Check if this is a repository-based URL
-        var isRepoURL = pathParts.length >= 2 && pathParts[0] === 'tester_site_Secret';
+        var isRepoURL = pathParts.length >= 2 && pathParts[0] === 'roblox_info_post';
         var isDirectPageAccess = pathParts.length === 1 && pageNames['/' + pathParts[0]];
         
         if (isRepoURL) {
-            // This is mavpacheater.github.io/tester_site_Secret/page_name
+            // This is mavpacheater.github.io/roblox_info_post/page_name
             var pagePath = '/' + pathParts.slice(1).join('/');
-            pageName = pageNames[pagePath] || 'Arm Helper';
+            pageName = pageNames[pagePath] || 'Roblox Info';
             
             document.getElementById('pageName').textContent = pageName;
             
@@ -153,7 +153,7 @@
             console.log('💾 Stored repo-based path for restoration:', pagePath + search + hash);
             
             // Redirect to the base repository URL
-            var baseURL = window.location.protocol + '//' + window.location.host + '/tester_site_Secret/';
+            var baseURL = window.location.protocol + '//' + window.location.host + '/roblox_info_post/';
             console.log('🔄 Redirecting to repository base:', baseURL);
             
             setTimeout(function() {
@@ -163,7 +163,7 @@
         } else if (isDirectPageAccess) {
             // This is mavpacheater.github.io/page_name (direct access without repo)
             var pagePath = '/' + pathParts[0];
-            pageName = pageNames[pagePath] || 'Arm Helper';
+            pageName = pageNames[pagePath] || 'Roblox Info';
             
             document.getElementById('pageName').textContent = pageName;
             
@@ -172,7 +172,7 @@
             console.log('💾 Stored direct path for restoration:', pagePath + search + hash);
             
             // Redirect to the correct repository URL
-            var correctURL = window.location.protocol + '//' + window.location.host + '/tester_site_Secret' + pagePath + search + hash;
+            var correctURL = window.location.protocol + '//' + window.location.host + '/roblox_info_post' + pagePath + search + hash;
             console.log('🎯 Redirecting to correct repository URL:', correctURL);
             
             setTimeout(function() {
@@ -181,11 +181,11 @@
             
         } else {
             // Fallback for other cases
-            document.getElementById('pageName').textContent = 'Arm Helper';
+            document.getElementById('pageName').textContent = 'Roblox Info';
             
             sessionStorage.setItem('pathToRestore', '/' + search + hash);
             
-            var baseURL = window.location.protocol + '//' + window.location.host + '/tester_site_Secret/';
+            var baseURL = window.location.protocol + '//' + window.location.host + '/roblox_info_post/';
             console.log('🔄 Fallback redirect to:', baseURL);
             
             setTimeout(function() {
