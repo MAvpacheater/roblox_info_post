@@ -42,7 +42,7 @@ class AWSModuleLoader {
         const { protocol, host, pathname } = window.location;
         
         if (host === 'mavpacheater.github.io') {
-            return `${protocol}//${host}/tester_site_Secret/AWS/`;
+            return `${protocol}//${host}/roblox_info_post/AWS/`;
         }
         
         if (host.includes('localhost') || host.includes('127.0.0.1')) {
