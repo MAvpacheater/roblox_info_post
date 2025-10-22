@@ -14,7 +14,7 @@
     // ========== CONFIG ==========
     const getBasePath = () => {
         const { protocol, host, pathname } = window.location;
-        if (host === 'mavpacheater.github.io') return `${protocol}//${host}/tester_site_Secret/`;
+        if (host === 'mavpacheater.github.io') return `${protocol}//${host}/roblox_info_post/`;
         if (host.includes('localhost') || host.includes('127.0.0.1')) {
             const parts = pathname.split('/').filter(Boolean);
             if (parts.length && parts[0] !== 'AWS') return `${protocol}//${host}/${parts[0]}/`;
