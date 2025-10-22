@@ -1,4 +1,13 @@
-// ========== CONTENT LOADER (AWS + RCU + System Separate) ==========
+// ========== CONTENT LOADER (AWS + RCU + System - NO MENU LOGIC) ==========
+
+// Конфігурація іконок для сторінок
+const PAGE_ICONS = {
+    calculator: '🐾', arm: '💪', grind: '🏋️‍♂️', roulette: '🎰', boss: '👹',
+    boosts: '🚀', shiny: '✨', secret: '🔮', codes: '🎁', aura: '🌟',
+    trainer: '🏆', charms: '🔮', potions: '🧪', worlds: '🌍',
+    trader: '🛒', clans: '🏰', petscalc: '🐾',
+    settings: '⚙️', help: '🆘', peoples: '🙏'
+};
 
 async function loadContent() {
     try {
@@ -41,8 +50,6 @@ async function loadContent() {
         appContent.innerHTML = createAppStructure(combinedContent);
         console.log('✅ Content structure created (AWS + RCU + System)');
 
-        ensureMobileMenuButton();
-
         setTimeout(() => {
             if (typeof window.initializeApp === 'function') {
                 window.initializeApp();
@@ -54,7 +61,6 @@ async function loadContent() {
         
         initializeSignatureEasterEgg();
         document.dispatchEvent(new CustomEvent('contentLoaded'));
-        waitForAuthUI();
         
         console.log('✅ Content loaded (AWS + RCU + System)');
         
@@ -69,7 +75,7 @@ function createAppStructure(contentHTML) {
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <h3></h3>
-                <button class="close-sidebar" onclick="closeSidebar()">×</button>
+                <button class="close-sidebar" onclick="window.closeSidebar(); return false;">×</button>
             </div>
             <div class="nav-buttons">
                 ${createMainCategory('awsCategory', '📦', [
@@ -82,40 +88,20 @@ function createAppStructure(contentHTML) {
                     { id: 'rcuCalculatorButtons', icon: '🧮', pages: ['petscalc'] }
                 ])}
 
-                ${createMainCategoryDirect('systemCategory', '⚙️', ['settings', 'profile', 'help', 'peoples'])}
+                ${createMainCategoryDirect('systemCategory', '⚙️', ['settings', 'help', 'peoples'])}
             </div>
             
-            <div class="sidebar-user" id="sidebarUser">
+            <div class="sidebar-controls" id="sidebarControls">
                 <button class="settings-btn-sidebar" onclick="switchPage('settings')" title="Settings">⚙️</button>
-                <button class="auth-btn-sidebar" id="authButton">⏳ Loading...</button>
             </div>
         </div>
 
-        <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="window.closeSidebar(); return false;"></div>
+        
+        <button class="mobile-menu-toggle" onclick="window.toggleMobileMenu(); return false;">☰</button>
            
         <div class="container">${contentHTML}</div>
     `;
-}
-
-function ensureMobileMenuButton() {
-    const oldButton = document.querySelector('.mobile-menu-toggle');
-    if (oldButton) oldButton.remove();
-
-    const menuButton = document.createElement('button');
-    menuButton.className = 'mobile-menu-toggle';
-    menuButton.onclick = toggleMobileMenu;
-    menuButton.textContent = '☰';
-
-    const appContent = document.getElementById('app-content');
-    const header = document.querySelector('header');
-    
-    if (header) {
-        header.after(menuButton);
-    } else {
-        appContent.before(menuButton);
-    }
-
-    console.log('✅ Mobile menu button ensured');
 }
 
 function createMainCategory(id, icon, subcategories) {
@@ -124,7 +110,7 @@ function createMainCategory(id, icon, subcategories) {
             <div class="main-category-header" data-main-category="${id}" onclick="toggleMainCategory('${id}')">
                 <div class="main-category-title">
                     <span class="main-category-icon">${icon}</span>
-                    <span></span>
+                    <span class="main-category-text"></span>
                 </div>
                 <span class="main-category-toggle">▼</span>
             </div>
@@ -141,13 +127,16 @@ function createMainCategoryDirect(id, icon, pages) {
             <div class="main-category-header" data-main-category="${id}" onclick="toggleMainCategory('${id}')">
                 <div class="main-category-title">
                     <span class="main-category-icon">${icon}</span>
-                    <span></span>
+                    <span class="main-category-text"></span>
                 </div>
                 <span class="main-category-toggle">▼</span>
             </div>
             <div class="main-category-content main-category-direct" id="${id}">
                 ${pages.map(page => 
-                    `<button class="nav-btn" data-page="${page}" onclick="switchPage('${page}')"></button>`
+                    `<button class="nav-btn" data-page="${page}" onclick="switchPage('${page}')">
+                        <span class="nav-btn-icon">${PAGE_ICONS[page] || '📄'}</span>
+                        <span class="nav-btn-text"></span>
+                    </button>`
                 ).join('')}
             </div>
         </div>
@@ -160,13 +149,16 @@ function createNavCategory(id, icon, pages) {
             <div class="category-header" data-category="${id}" onclick="toggleCategory('${id}')">
                 <div class="category-title">
                     <span class="category-icon">${icon}</span>
-                    <span></span>
+                    <span class="category-text"></span>
                 </div>
                 <span class="category-toggle">▼</span>
             </div>
             <div class="category-buttons" id="${id}">
                 ${pages.map(page => 
-                    `<button class="nav-btn" data-page="${page}" onclick="switchPage('${page}')"></button>`
+                    `<button class="nav-btn" data-page="${page}" onclick="switchPage('${page}')">
+                        <span class="nav-btn-icon">${PAGE_ICONS[page] || '📄'}</span>
+                        <span class="nav-btn-text"></span>
+                    </button>`
                 ).join('')}
             </div>
         </div>
@@ -259,7 +251,6 @@ function openCategoryForPage(page) {
         'clans': ['awsCategory', 'othersAWSButtons'],
         'petscalc': ['rcuCategory', 'rcuCalculatorButtons'],
         'settings': ['systemCategory', null],
-        'profile': ['systemCategory', null],
         'help': ['systemCategory', null],
         'peoples': ['systemCategory', null]
     };
@@ -303,116 +294,6 @@ function openCategoryForPage(page) {
             subToggle.classList.add('expanded');
             console.log('✅ Opened subcategory:', subCategoryId);
         }
-    }
-}
-
-// ========== AUTH BUTTON ==========
-
-function waitForAuthUI() {
-    let attempts = 0;
-    const maxAttempts = 50;
-    
-    const interval = setInterval(() => {
-        attempts++;
-        
-        if (window.authUI?.openModal) {
-            console.log('✅ Auth UI ready');
-            clearInterval(interval);
-            setupAuthButton();
-            return;
-        }
-        
-        if (window.firebaseManager?.isInitialized && typeof initializeAuthUI === 'function') {
-            console.log('🔐 Initializing Auth UI');
-            initializeAuthUI();
-        }
-        
-        if (attempts >= maxAttempts) {
-            console.warn('⚠️ Auth UI timeout');
-            clearInterval(interval);
-            setupAuthButtonFallback();
-        }
-    }, 100);
-}
-
-function setupAuthButton() {
-    const authButton = document.getElementById('authButton');
-    if (!authButton) {
-        console.error('❌ Auth button not found');
-        return;
-    }
-    
-    const newButton = authButton.cloneNode(true);
-    authButton.parentNode.replaceChild(newButton, authButton);
-    
-    newButton.addEventListener('click', function(event) {
-        event.preventDefault();
-        event.stopPropagation();
-        
-        if (!window.firebaseManager?.isInitialized) {
-            alert('Система авторизації ініціалізується.\nЗачекайте і спробуйте знову.');
-            return;
-        }
-        
-        const user = window.firebaseManager.getCurrentUser();
-        
-        if (user) {
-            typeof switchPage === 'function' && switchPage('profile');
-        } else {
-            if (window.urlRouter) {
-                const r = window.urlRouter();
-                r?.setQueryParams?.({ auth: 'signin' }, true);
-            }
-
-            if (window.authUI?.openModal) {
-                window.authUI.openModal('signin');
-            } else {
-                alert('UI авторизації не завантажений.\nОновіть сторінку.');
-            }
-        }
-    });
-    
-    updateAuthButtonText();
-    console.log('✅ Auth button configured');
-}
-
-function setupAuthButtonFallback() {
-    const authButton = document.getElementById('authButton');
-    if (!authButton) return;
-    
-    authButton.textContent = '🔐 Login';
-    authButton.classList.remove('disabled');
-    
-    authButton.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        alert('Система авторизації не завантажена.\n\nОновіть сторінку.');
-    });
-}
-
-function updateAuthButtonText() {
-    const authButton = document.getElementById('authButton');
-    if (!authButton) return;
-    
-    const lang = (typeof getCurrentAppLanguage === 'function' ? getCurrentAppLanguage() : null) || 'en';
-    
-    if (window.firebaseManager?.isInitialized) {
-        const user = window.firebaseManager.getCurrentUser();
-        
-        if (user) {
-            authButton.textContent = `👤 ${user.displayName || 'User'}`;
-            authButton.title = lang === 'uk' ? 'Переглянути профіль' : 'View profile';
-            authButton.classList.remove('disabled');
-        } else {
-            const texts = { en: '🔐 Login', uk: '🔐 Увійти', ru: '🔐 Войти' };
-            authButton.textContent = texts[lang] || '🔐 Login';
-            authButton.title = lang === 'uk' ? 'Увійдіть для синхронізації' : 'Login to sync data';
-            authButton.classList.remove('disabled');
-        }
-    } else {
-        const texts = { en: '⏳ Loading...', uk: '⏳ Завантаження...', ru: '⏳ Загрузка...' };
-        authButton.textContent = texts[lang] || '⏳ Loading...';
-        authButton.classList.add('disabled');
     }
 }
 
@@ -472,32 +353,6 @@ function initializeSignatureEasterEgg() {
 
 document.addEventListener('languageChanged', () => {
     console.log('🌍 Language changed');
-    updateAuthButtonText();
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    let checkCount = 0;
-    const interval = setInterval(() => {
-        checkCount++;
-        
-        if (window.firebaseManager?.isInitialized) {
-            console.log('✅ Firebase ready');
-            clearInterval(interval);
-            
-            if (window.firebaseManager.addEventListener) {
-                window.firebaseManager.addEventListener('authChanged', (user) => {
-                    console.log('🔄 Auth changed:', user ? user.displayName : 'signed out');
-                    updateAuthButtonText();
-                });
-            }
-            
-            updateAuthButtonText();
-        } else if (checkCount >= 100) {
-            console.warn('⚠️ Firebase timeout');
-            clearInterval(interval);
-            updateAuthButtonText();
-        }
-    }, 100);
 });
 
 // ========== PAGE CHANGE OBSERVER ==========
@@ -510,48 +365,22 @@ document.addEventListener('pageChanged', (e) => {
     }
 });
 
-// ========== PAGE SWITCH OBSERVER ==========
-
-const observeAppContent = () => {
-    const appContent = document.getElementById('app-content');
-    if (!appContent) return;
-
-    const observer = new MutationObserver((mutations) => {
-        const menuButton = document.querySelector('.mobile-menu-toggle');
-        if (!menuButton) {
-            console.warn('⚠️ Mobile menu button missing, restoring...');
-            ensureMobileMenuButton();
-        }
-    });
-
-    observer.observe(appContent, {
-        childList: true,
-        subtree: false
-    });
-
-    console.log('✅ App content observer started');
-};
-
 // ========== INITIALIZATION ==========
 
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         loadContent();
-        setTimeout(observeAppContent, 1000);
     });
 } else {
     loadContent();
-    setTimeout(observeAppContent, 1000);
 }
 
 // Exports
 Object.assign(window, { 
-    updateAuthButtonText, 
-    setupAuthButton,
-    ensureMobileMenuButton,
     toggleMainCategory,
     toggleCategory,
-    openCategoryForPage
+    openCategoryForPage,
+    PAGE_ICONS
 });
 
-console.log('✅ Content Loader ready (AWS + RCU + System Separate)');
+console.log('✅ Content Loader ready (CLEANED - No Menu Logic)');
