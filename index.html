@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roblox Info</title>
+    <title>Arm Helper</title>
     
     <script>
         // Set base path early - BEFORE any resource loading
@@ -13,7 +13,7 @@
             let basePath = '';
             
             if (host === 'mavpacheater.github.io') {
-                basePath = '/roblox_info_post/';
+                basePath = '/tester_site_Secret/';
             }
             
             window.__APP_BASE_PATH__ = basePath;
@@ -32,7 +32,7 @@
             const redirect = sessionStorage.pathToRestore;
             if (redirect && redirect !== '/') {
                 const host = window.location.host;
-                const basePath = host === 'mavpacheater.github.io' ? '/roblox_info_post' : '';
+                const basePath = host === 'mavpacheater.github.io' ? '/tester_site_Secret' : '';
                 history.replaceState(null, null, basePath + redirect);
             }
         })();
@@ -41,7 +41,12 @@
     <link rel="icon" type="image/png" sizes="32x32" href="AWS/image/bg/penguin.png">
     <link rel="preload" href="system/general.css" as="style">
     <link rel="preload" href="system/general.js" as="script">
+    
+    <!-- Core CSS -->
     <link rel="stylesheet" href="system/general.css">
+    <link rel="stylesheet" href="system/moderation/menu_manager.css">
+    <link rel="stylesheet" href="system/moderation/settings.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="system/system_content/system_content.css" media="print" onload="this.media='all'">
     
     <style>
         /* Loading screen styles */
@@ -117,19 +122,13 @@
         }
     </style>
     
-    <!-- CRITICAL: System CSS - завантажуються статично -->
-    <link rel="stylesheet" href="system/moderation/settings.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="system/profile/auth.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="system/profile/profile.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="system/system_content/system_content.css" media="print" onload="this.media='all'">
-    
     <!-- AWS CSS завантажуються динамічно через aws_loader.js -->
 </head>
 <body>
     <div id="loading-screen">
         <div class="loading-content">
             <div class="loading-icon">🚀</div>
-            <div>Loading Roblox Info...</div>
+            <div>Loading Arm Helper...</div>
             <div class="loading-subtitle">Initializing...</div>
         </div>
     </div>
@@ -138,31 +137,14 @@
     <div id="app-content"></div>
     <div class="signature">Completely free</div>
     
-    <!-- Auth Modal Container -->
-    <div id="authModalContainer"></div>
-    
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
-    
-    <!-- Verify Firebase -->
-    <script>
-        if (typeof firebase === 'undefined') {
-            console.error('❌ Firebase SDK failed to load');
-            alert('Firebase SDK failed to load.\n\nPlease check your internet connection and refresh the page.');
-        } else {
-            console.log('✅ Firebase SDK loaded v' + firebase.SDK_VERSION);
-        }
-    </script>
-    
-    <!-- CRITICAL: Тільки системні скрипти, AWS завантажуються через loader.js -->
+    <!-- Core System Scripts (порядок важливий!) -->
     <script src="system/general.js" defer></script>
     <script src="system/colors.js" defer></script>
     <script src="system/reload.js" defer></script>
     <script src="system/url.js" defer></script>
-    <script src="system/firebase.js" defer></script>
     <script src="system/loader.js" defer></script>
+    <footer>
+        &copy; 2025 PROJECT NOT UPDATING NOW
+    </footer>
 </body>
 </html>
