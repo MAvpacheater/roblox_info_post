@@ -121,7 +121,7 @@ async function initializeSystems() {
         if (typeof initGitHubAutoReload === 'function') {
             initGitHubAutoReload({
                 githubUser: 'MAvpacheater',
-                githubRepo: 'tester_site_Secret',
+                githubRepo: 'roblox_info_post',
                 branch: 'main',
                 checkInterval: 60000
             });
